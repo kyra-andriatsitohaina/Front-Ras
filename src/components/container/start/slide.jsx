@@ -18,7 +18,9 @@ const StartSlide = ()=>{
             {
                 dataImg.map((img,index)=>(
                     <div key={index}>
-                        <img src={`${UrlApi.baseUrl}client/images/${img}`} alt={img} style={{height:"50vw",width:"100%",filter:"brightness(50%)",cursor:"grab"}} />
+                      {
+                        img && <img src={`${UrlApi.baseUrl}client/images/${img}`} alt={img} style={{height:"50vw",width:"100%",filter:"brightness(50%)",cursor:"grab"}} />
+                      }
                     </div>
                 ))
             }

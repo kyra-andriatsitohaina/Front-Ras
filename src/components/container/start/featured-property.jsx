@@ -18,7 +18,9 @@ const FeaturedProperty = () => {
             </div>
             <div className="featured_img">
             <div className="box-img">
-                <img src={`${UrlApi.baseUrl}client/images/${dataMin.image}`} alt="" />
+                {
+                    dataMin && <img src={`${UrlApi.baseUrl}client/images/${dataMin.image}`} alt={dataMin.image} />
+                }
                 <div className="title">
                     <h3>{dataMin.title}</h3>
                 </div>
