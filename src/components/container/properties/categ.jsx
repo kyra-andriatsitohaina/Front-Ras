@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import { SettingSlick } from "../../utils/slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
-import { UrlApi } from "../../../api/urlApi";
+import { url_api } from "../../../api/urlApi";
 
 const Categories = ({category}) => {
     const [data,setData] = useContext(ArticleContext)
@@ -15,9 +15,8 @@ const Categories = ({category}) => {
     const tabSetting = []
     for(let i= 0 ; i< category.length;i++){filtre.push(data.filter((d)=>d.category === category[i]));tabSetting.push({...SettingSlick})}
 
-    const showDetail = (data)=>{setModalContext(true);setDetailContext({hidden:true,data})}
+    const showDetail = (data)=>{setModalContext({show:true,login:false});setDetailContext({hidden:true,data})}
     const handleFavorite = ()=>{
-
     }
     return (
         <>
@@ -35,7 +34,7 @@ const Categories = ({category}) => {
                                     <div key={index}>
                                         <div className="property" >
                                             {
-                                                data && <img src={`${UrlApi.baseUrl}client/images/${data.image}`} alt={data.image} onClick={()=>showDetail(data)} title="details"/>
+                                                data && <img src={`${url_api.images}${data.image}`} alt={data.image} onClick={()=>showDetail(data)} title="details"/>
                                             }
                                             <h3>{data.title}</h3>
                                             <p>{data.description}</p>

@@ -1,7 +1,7 @@
 const Popular = () => {
     return (
         <section className="popular-properties" id="popular" style={{paddingTop:"12vw"}}>
-            <div className="box-popular">
+            <div className="box-popular" >
                 <div className="title">
                     <h2>popular properties</h2>
                 </div>

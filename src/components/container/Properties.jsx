@@ -3,12 +3,12 @@ import { CategoryContext } from "../context/Context"
 import Categories from "./properties/categ"
 import Search from "./properties/search"
 import axios from "axios"
-import { UrlApi } from "../../api/urlApi"
+import { url_api } from "../../api/urlApi"
 
 const Properties = () => {
     const [dataCategory,setDataCategory] = useState([])
     useEffect(()=>{
-        axios.get(`${UrlApi.baseUrl}admin/category`)
+        axios.get(url_api.category)
         .then(res=> setDataCategory(res.data))
         .catch(err=>console.log(err))
     },[])

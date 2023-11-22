@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import { ArticleContext } from "../../context/Context";
-import { UrlApi } from "../../../api/urlApi";
+import {url_api } from "../../../api/urlApi";
 
 const StartSlide = ()=>{
     const settings = {dots: false,infinite: true,speed:1500,slidesToShow: 1,slidesToScroll: 1,initialSlide: 0,autoplay:true,}
@@ -19,7 +19,7 @@ const StartSlide = ()=>{
                 dataImg.map((img,index)=>(
                     <div key={index}>
                       {
-                        img && <img src={`${UrlApi.baseUrl}client/images/${img}`} alt={img} style={{height:"50vw",width:"100%",filter:"brightness(50%)",cursor:"grab"}} />
+                        img && <img src={`${url_api.images}${img}`} alt={img} style={{height:"50vw",width:"100%",filter:"brightness(50%)",cursor:"grab"}} />
                       }
                     </div>
                 ))
