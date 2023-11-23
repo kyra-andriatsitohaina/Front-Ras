@@ -1,6 +1,6 @@
 import { Link, Outlet } from "react-router-dom"
 import { url_api } from "../../../api/urlApi"
-import { useContext, useDeferredValue, useEffect, useLayoutEffect } from "react"
+import { useContext } from "react"
 import { AuthUser } from "../../context/Context"
 import { useCookies } from "react-cookie"
 import { toast } from 'react-toastify'

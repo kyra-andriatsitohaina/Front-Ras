@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import AboutContact from "./components/container/About-contact"
 import Properties from "./components/container/Properties"
 import Start from "./components/container/Start"
-import { ArticleContext} from "./components/context/Context"
+import { ArticleContext, SearchContext} from "./components/context/Context"
 import axios from "axios"
 import { url_api } from "./api/urlApi"
 import Header from "./components/share/Header"
@@ -12,6 +12,7 @@ import Popular from "./components/container/Popular"
 
 const Acceuil = () => {
     const [data,setData] = useState([])
+    const [search,setSearch] = useState({active:false,result:0,query:""})
     useEffect(()=>{
         axios.get(url_api.articles)
         .then(res=>setData(res.data))
@@ -21,11 +22,13 @@ const Acceuil = () => {
         <>          
             <Modal/>
             <Header/>
-            <ArticleContext.Provider value={[data,setData]}>
-                <Start/>
-                <Properties/>
-                <Popular/>
-            </ArticleContext.Provider>
+            <SearchContext.Provider value={[search,setSearch]}>
+                <ArticleContext.Provider value={[data,setData]}>
+                    <Start/>
+                    <Properties/>
+                    <Popular/>
+                </ArticleContext.Provider>
+            </SearchContext.Provider>
             <AboutContact/>
             <Footer/>
         </>

@@ -7,6 +7,10 @@ import { useCookies } from "react-cookie"
 import { jwtDecode } from "jwt-decode"
 import Article from "./components/container/article/article"
 import List from "./components/container/article/list"
+import Admin from "./components/admin/admin"
+import LoginAdmin from "./components/admin/loginAdmin"
+import Dasboard from "./components/admin/dashboard"
+import Listing from "./components/admin/listing"
 
 const App = () => {
     const [UserData,setUserData] =  useState({status:false,data:{}})
@@ -25,6 +29,12 @@ const App = () => {
                         <DetailContext.Provider value={[detailContext,setDetailContext]}>
                             <Routes>
                                 <Route path="/" element={<Acceuil/>}/> 
+                                <Route element={<Admin/>}>
+                                    <Route path="/admin/login" element={<LoginAdmin/>}/>
+                                    <Route element={<Dasboard/>}>
+                                        <Route path="/admin/dashboard/list" element={<Listing/>}/>
+                                    </Route>
+                                </Route>
                                 {cookies._auth &&
                                     <Route element={<Article/>}>
                                         <Route path="/article/list" element={<List/>}/>

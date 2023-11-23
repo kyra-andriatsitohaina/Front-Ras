@@ -24,9 +24,9 @@ const Login = () => {
     const img = useRef()
     const navigate = useNavigate()
     const formData = new FormData()
-    const getPhoto = (e)=>{formData.append("photo",e.target.files[0]);
-    img.current.src = window.URL.createObjectURL(e.target.files[0])
-}
+    const [photo,setPhoto ] = useState()
+    const getPhoto = (e)=>{setPhoto(e.target.files[0]);
+    img.current.src = window.URL.createObjectURL(e.target.files[0])}
 
     const onSubmit = (data)=>{
         setConfirm({emailExist:false,emailConf:false,passwordConf:false})
@@ -36,6 +36,7 @@ const Login = () => {
             formData.append("pseudo",data.pseudo)
             formData.append("email",data.email)
             formData.append("password",data.password)
+            formData.append("photo",photo)
             postData = formData
         }else{
             postData = {...data}
