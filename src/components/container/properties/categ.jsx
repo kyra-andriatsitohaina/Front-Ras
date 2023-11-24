@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { ArticleContext, CategoryContext, DetailContext, ModalContext, SearchContext } from "../../context/Context"
 import Slider from "react-slick";
 import { SettingSlick } from "../../utils/slick";
@@ -27,7 +27,11 @@ const Categories = ({category}) => {
         .then(res=>setData(res.data))
         .catch(()=>alert("erreur de connexion à la base de donnée"))
     }
+    useEffect(()=>{
+
+    },[])
     return (
+
         <>  
             {search.active && 
                 <div style={{padding:"2vw",width:"100%",marginBottom:"1vw",display:"flex",justifyContent:"space-between",alignItems:"center",background:"whitesmoke",borderRadius:".5vw"}}>

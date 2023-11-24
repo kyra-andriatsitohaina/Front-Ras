@@ -33,7 +33,7 @@ const Article = () => {
                     <ul>
                         <li><Link to={"/"}>Home</Link></li>
                         <li><Link to={"/article/list"}>list</Link></li>
-                        <li><Link>add</Link></li>
+                        <li><Link to={"/article/new"}>add</Link></li>
                     </ul>
                 </nav>
             </div>

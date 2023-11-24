@@ -1,10 +1,10 @@
 export const SettingSlick = {
     dots: false,
-    infinite: false,
+    infinite:0,
     speed: 500,
     slidesToShow: 3,
-    slidesToScroll: 3,
-    initialSlide: 3,
+    slidesToScroll: 2,
+    initialSlide: 0,
 
     responsive: [
       {
@@ -12,6 +12,8 @@ export const SettingSlick = {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 2,
+          initialSlide: 0,
+          infinite:0,
           dots: false,
 
         }
@@ -21,7 +23,7 @@ export const SettingSlick = {
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-          initialSlide: 3,
+          initialSlide: 0,
           dots: false
         }
       },

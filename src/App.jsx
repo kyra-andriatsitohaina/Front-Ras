@@ -11,6 +11,7 @@ import Admin from "./components/admin/admin"
 import LoginAdmin from "./components/admin/loginAdmin"
 import Dasboard from "./components/admin/dashboard"
 import Listing from "./components/admin/listing"
+import PostArticle from "./components/container/article/postArticle"
 
 const App = () => {
     const [UserData,setUserData] =  useState({status:false,data:{}})
@@ -38,10 +39,10 @@ const App = () => {
                                 {cookies._auth &&
                                     <Route element={<Article/>}>
                                         <Route path="/article/list" element={<List/>}/>
-                                        <Route path="/article/edit" element={<h2>edit</h2>}/>
+                                        <Route path="/article/new" element={<PostArticle/>}/>
                                         <Route path="/article/add" element={<h2>add</h2>}/>
                                     </Route>
-                                }
+                                } 
                                 <Route path="*" element={<NotFound/>}/>
                             </Routes>
                         </DetailContext.Provider>
