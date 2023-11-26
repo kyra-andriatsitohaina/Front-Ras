@@ -23,7 +23,7 @@ const DetailAdmin = () => {
     useEffect(()=>{
         axios.get(`${url_api.articles}`)
         .then(res=>setDataArticle(res.data))
-        .catch((error)=>alert(error));
+        .catch(()=>alert("erreur de connexion à la bdd"));
     },[])
     return (
         <div className="box-detail">

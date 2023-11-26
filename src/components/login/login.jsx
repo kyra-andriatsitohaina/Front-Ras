@@ -4,7 +4,7 @@ import { AuthUser,  ModalContext, RegisterContext } from "../context/Context"
 import { Validation } from "../utils/validation"
 import { useForm } from "react-hook-form"
 import axios from "axios"
-import {  url_api } from "../../api/urlApi"
+import { url_api } from "../../api/urlApi"
 import { gapi } from "gapi-script"
 import LoginGoogle from "./googleLogin"
 import { IdClient } from "../utils/google"
@@ -65,7 +65,7 @@ const Login = () => {
                     setConfirm({passwordConf:true})
                     break;
                 default:
-                    // toast.danger("⚠️ status invalid ⚠️")
+                    // toast.danger("⚠️ status invalid ⚠️ !!! jamais")
                     break;
             }
         }
