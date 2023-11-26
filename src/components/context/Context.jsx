@@ -7,3 +7,7 @@ export const RegisterContext = createContext()
 export const DetailContext = createContext()
 export const AuthUser = createContext()
 export const SearchContext = createContext()
+export const ShowDetailArt = createContext()
+export const ArtDetailAdmin = createContext()
+export const ValidateArticle = createContext()
+

@@ -13,9 +13,14 @@ import Popular from "./components/container/Popular"
 const Acceuil = () => {
     const [data,setData] = useState([])
     const [search,setSearch] = useState({active:false,result:0,query:""})
+
+    const setStatus = (data)=>{
+        const d= data.filter((x)=>x.status===true)
+        setData(d)
+    }
     useEffect(()=>{
         axios.get(url_api.articles)
-        .then(res=>setData(res.data))
+        .then(res=>setStatus(res.data))
         .catch(()=>alert("erreur de connexion à la base de donnée"))
     },[])
     return (
