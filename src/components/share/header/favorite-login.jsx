@@ -3,6 +3,7 @@ import { AuthUser, DetailContext, ModalContext } from "../../context/Context"
 import { useCookies } from "react-cookie"
 import { url_api } from "../../../api/urlApi"
 import { toast } from 'react-toastify'
+import { Link } from "react-router-dom"
 
 
 const FavoriteLogin = () => {
@@ -26,9 +27,18 @@ const FavoriteLogin = () => {
             </button>
             {
                 Auth.status ? (
-                    <button title="se deconnecté" onClick={Logout}>
+                    <div className="profile">
                         <img src={`${url_api.images}${Auth.data.photo}`} alt={Auth.data.pseudo} style={{width:"3vw",height:"3vw",boxShadow:"0 0 .3vw white",borderRadius:"50%"}}/>
-                    </button>
+                        <ul>
+                            <li>
+                                <Link to={"/article/list"}>article</Link>
+                            </li>
+                            <li>
+                                <button onClick={Logout}>logout</button>
+                            </li>
+                        </ul>
+
+                    </div>
                 ) 
                 : (
                 <button onClick={()=>{setModal({show:true,login:true});setDetailContext({hidden:false})}}>

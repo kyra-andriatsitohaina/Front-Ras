@@ -7,13 +7,13 @@ import { url_api } from "../../api/urlApi"
 
 const Properties = () => {
     const [dataCategory,setDataCategory] = useState([])
+    const categ = []
+    dataCategory.map((data)=>{categ.push(data.province)})
     useEffect(()=>{
         axios.get(url_api.category)
         .then(res=> setDataCategory(res.data))
         .catch(err=>console.log(err))
     },[])
-    const categ = []
-    dataCategory.map((data)=>{categ.push(data.province)})
     return (
         <CategoryContext.Provider value={[dataCategory,setDataCategory]}>
             <section className="featured-properties" id="properties">

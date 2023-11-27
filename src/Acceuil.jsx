@@ -13,9 +13,8 @@ import Popular from "./components/container/Popular"
 const Acceuil = () => {
     const [data,setData] = useState([])
     const [search,setSearch] = useState({active:false,result:0,query:""})
-
     const setStatus = (data)=>{
-        const d= data.filter((x)=>x.status===true)
+        const d= data.filter((x)=>x.status==="oui")
         setData(d)
     }
     useEffect(()=>{

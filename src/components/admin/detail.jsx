@@ -9,9 +9,9 @@ const DetailAdmin = () => {
     const [dataArticle,setDataArticle] = useState([])
 
     const handleValidation = (id)=>{const art = dataArticle.find(art=>art.id===id)
-        if(art.status){
+        if(art.status == "oui"){
             toast.info(`cet article est deja publié`)
-        }else{art.status=true
+        }else{art.status="oui"
             axios.patch(`${url_api.articles}${id}`,art)
             .then(()=>{toast.success(`article : ${art.title} validé`);setShowDetail(false)})
         }
@@ -29,7 +29,7 @@ const DetailAdmin = () => {
         <div className="box-detail">
             <div className="box-content">
                 <h2>{ArtDetail.title}</h2>
-                <h2>status : <span className={ArtDetail.status ? "valid" : "unvalid"}>{ArtDetail.status ? "publié" : "non validé"}</span></h2>
+                <h2>status : <span className={ArtDetail.status == "oui" ? "valid" : "unvalid"}>{ArtDetail.status =="oui" ? "publié" : "non validé"}</span></h2>
             </div>
             <div className="box-content">
                 <p>{ArtDetail.description}</p>

@@ -1,18 +1,24 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import axios from "axios"
 import { url_api } from "../../../api/urlApi"
 import { toast } from 'react-toastify'
+import { AuthUser } from "../../context/Context"
+import {useNavigate} from "react-router-dom"
 
 
 const PostArticle = () => {
-    const [categ,setCateg] = useState(false)
+    const [categ,setCateg] = useState("maison")
     const [paiement,setPaiment] = useState(false)
     const [photo,setPhoto ] = useState()
     const  [dataArticle,setDataArticle] = useState({})
+    const [Auth,setAuth]= useContext(AuthUser)
+    const navigate = useNavigate()
+    const img = useRef(null)
     const formData = new FormData()
-
-    const getPhoto = (e)=>{setPhoto(e.target.files[0])}; const handleCategory = ()=>{setCateg(!categ)}
+    
+    const getPhoto = (e)=>{setPhoto(e.target.files[0]);img.current.src = window.URL.createObjectURL(e.target.files[0])}; 
+    const handleCategory = (e)=>{setCateg(e.target.value);}
     const onSubmit = (data,e)=>{
         e.preventDefault
         setPaiment(true)
@@ -22,31 +28,30 @@ const PostArticle = () => {
     const validArticle = (data,e)=>{
         e.preventDefault
         const values = {...dataArticle}
-        categ ? (values.category="terrain") : (values.category="maison")
         formData.append("title",values.title)
         formData.append("description",values.description)
         formData.append("price",values.price)
         formData.append("image",photo)
-        formData.append("type",values.type)
         formData.append("province",values.province)
-        formData.append("category",values.category)
-        formData.append("chambre",values.chambre)
-        formData.append("elec",values.elec)
-        formData.append("eau",values.eau)
-        formData.append("garage",values.garage)
-        formData.append("status",false);
+        formData.append("category",categ)
+        formData.append("chambre",values.chambre);
+        (categ == "maison") ? (formData.append("access",values.access)):(formData.append("access",0));
+        (values.elec == false) ? (formData.append("elec","non")):formData.append("elec","oui");
+        (values.eau == false) ? (formData.append("eau","non")):formData.append("eau","oui");
+        (values.garage == false) ? (formData.append("garage","non")):formData.append("garage","oui");
+        formData.append("status","non");
         (values.superficie == undefined) ? (formData.append("superficie",0)):formData.append("superficie",values.superficie);
         formData.append("contact",data.contact);
         formData.append("reference",data.reference);
-        axios.post(`${url_api.articles}`,formData)
-        
+        axios.post(`${url_api.articles}${Auth.data.id}`,formData);
         toast.success("article ajouté 👍")
-        
         setTimeout(()=>{
             toast.info("en attente de validation avant la publication 🆗 ")
+            navigate("/article/list")
         },1000)
 
     }
+
     const registerForm = ()=>{
         const {handleSubmit,register,formState:{errors}}=useForm()
         return {handleSubmit,register,formState:{errors}}
@@ -97,18 +102,18 @@ const PostArticle = () => {
                     <textarea cols="30" rows="5" placeholder="description" required {...forms.add.register("description")}></textarea>
                     <div className="input-category">
                       <div className="select-category">
-                        <select id="category" onChange={handleCategory}>
+                        <select id="category" onChange={handleCategory} >
                             <option value="maison">maison</option>
                             <option value="terrain">terrain</option>
                         </select>
                         <label htmlFor="image">
-                            <img src="../img/image-add-fill.svg" style={{width:"3.5vw",height:"3.5vw"}}/>
+                            <img src="../img/image-add-fill.svg" style={{width:"3.5vw",height:"3.5vw"}} ref={img} />
                         </label>
                         <input type="file" onChange={getPhoto} id="image" hidden/>
                       </div>
                       <div className="categValue">
                         {
-                            categ ?
+                            categ=="terrain" ?
                             <div className="terrain">
                                 <div className="form-group">
                                     <label htmlFor="superficie">superficie :</label>
@@ -127,6 +132,13 @@ const PostArticle = () => {
                                 <div className="form-group">
                                     <label htmlFor="chambre">nombre de chambre :</label>
                                     <input type="number" min={0} defaultValue={0} {...forms.add.register("chambre")} />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="accessibilite">accessibilite :</label>
+                                    <select {...forms.add.register("accessibilite")} id="accessibilite">
+                                        <option value="moto">moto</option>
+                                        <option value="vehicule">vehicule</option>
+                                    </select>
                                 </div>
                                 <div className="form-group">
                                     <div className="inp">
@@ -151,6 +163,7 @@ const PostArticle = () => {
                 </form>
             }
         </div>
+        // Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veritatis temporibus maxime enim maiores sint repudiandae molestiae ratione, vero labore eveniet natus recusandae distinctio aliquam. Nostrum voluptatibus similique quod aspernatur! Asperiores, natus aliquam! Itaque voluptatibus nihil natus aliquam incidunt optio iste, exercitationem voluptatem labore dolorem quae quibusdam quasi officiis culpa.
     )   
 }
 

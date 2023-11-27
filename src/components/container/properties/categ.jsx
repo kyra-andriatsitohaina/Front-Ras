@@ -27,9 +27,6 @@ const Categories = ({category}) => {
         .then(res=>setData(res.data))
         .catch(()=>alert("erreur de connexion à la base de donnée"))
     }
-    useEffect(()=>{
-
-    },[])
     return (
 
         <>  

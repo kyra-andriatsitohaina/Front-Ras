@@ -12,9 +12,9 @@ const Listing = () => {
     const [showDetailArt,setShowDetail] = useContext(ShowDetailArt)
     const [artDetail,setArtDetail] = useContext(ArtDetailAdmin)
     const handleValidation = (id)=>{const art = dataArticle.find(art=>art.id===id)
-        if(art.status){
+        if(art.status=="oui"){
             toast.info(`cet article est deja publié`)
-        }else{art.status=true
+        }else{art.status="oui"
             axios.patch(`${url_api.articles}${id}`,art)
             .then(()=>{setValidate(!validate);toast.success(`article : ${art.title} validé`)})
         }
@@ -24,7 +24,7 @@ const Listing = () => {
             .then(()=>{setValidate(!validate);toast.success(`article : ${art.title} supprimé`)})
     }
     const handleFilter = (e)=>{if(e.target.value == "all"){setValidate(!validate);setFilterShow("all")
-        } else{const val = dataArticle.filter((art)=>art.status===false);setDataArticle(val);setFilterShow("unvalid")}}
+        } else{const val = dataArticle.filter((art)=>art.status=="non");setDataArticle(val);setFilterShow("unvalid")}}
 
     const showDetail = (art)=>{
         setArtDetail(art)
@@ -35,7 +35,7 @@ const Listing = () => {
         const error  = "erreur de connexion à la base de donnee"
         if(filterShow == "unvalid"){
             axios.get(`${url_api.articles}`)
-            .then(res=>{const val = res.data.filter((art)=>art.status===false);setDataArticle(val)})
+            .then(res=>{const val = res.data.filter((art)=>art.status=="non");setDataArticle(val)})
             .catch(()=>alert(error));
         }else{
             axios.get(`${url_api.articles}`)
@@ -55,8 +55,8 @@ const Listing = () => {
                 {
                 dataArticle.length !== 0 ?               
                 dataArticle.map(art=>(
-                <div key={art.id} className={`${art.status ? "box" :"boxi"} `} >
-                    <div className={`${art.status ? "status" :"en_cours"} `}><h3>{art.status ? "publié" : "en attente"}</h3></div>
+                <div key={art.id} className={`${art.status == "oui" ? "box" : "boxi"} `} >
+                    <div className={`${art.status == "oui" ? "status" :"en_cours"} `}><h3>{art.status == "oui" ? "publié" : "en attente"}</h3></div>
                     <img src={`${url_api.images}${art.image}`} alt={art.image} onClick={()=>showDetail(art)} />
                     <h2>{art.title}</h2>
                     <p>{art.description}</p>

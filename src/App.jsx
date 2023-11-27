@@ -18,7 +18,7 @@ const App = () => {
     const [modalContext,setModalContext] = useState({show:false,login:false})
     const [detailContext,setDetailContext] = useState({hidden:false})
 
-    const [cookies, setCookie, removeCookie] = useCookies(['_auth']);
+    const [cookies, setCookie, removeCookie] = useCookies(['_auth',"_admin"]);
     
     useEffect(()=>{
         cookies._auth && setUserData({status:true,data:{...jwtDecode(cookies._auth)}})
@@ -32,9 +32,11 @@ const App = () => {
                                 <Route path="/" element={<Acceuil/>}/> 
                                 <Route element={<Admin/>}>
                                     <Route path="/admin/login" element={<LoginAdmin/>}/>
-                                    <Route element={<Dasboard/>}>
-                                        <Route path="/admin/dashboard/list" element={<Listing/>}/>
-                                    </Route>
+                                    {cookies._admin &&
+                                        <Route element={<Dasboard/>}>
+                                            <Route path="/admin/dashboard/list" element={<Listing/>}/>
+                                        </Route>
+                                    }
                                 </Route>
                                 {cookies._auth &&
                                     <Route element={<Article/>}>

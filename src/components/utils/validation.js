@@ -25,4 +25,13 @@ export const Validation={
                     }
             },
 
+    titre :{
+            required:"veuillez saisir un titre pour votre article",
+            pattern:
+            {
+                message: "veuillez saisir un email valide"
+            }
+    },
+    description :{required:"ajouter une description pour votre article"},
+
 }
