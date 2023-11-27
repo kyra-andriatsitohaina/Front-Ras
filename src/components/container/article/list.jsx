@@ -1,15 +1,19 @@
-import {  useEffect, useRef, useState } from "react"
+import {  useContext, useEffect, useRef, useState } from "react"
 import { url_api } from "../../../api/urlApi"
 import axios from "axios"
 import { toast } from 'react-toastify'
+import { AuthUser } from "../../context/Context"
 
 const List = () => {
     const [data,setData] = useState([])
+    const [Auth,setAuth] = useContext(AuthUser)
     const [detail,setDetail] = useState([])
     const [showvalue,setShowValue] = useState({hidden:false})
     const [categ,setCateg] = useState()
     const [photo,setPhoto ] = useState()
+    const [reload,setReload] = useState(false)
     const img = useRef()
+    const formData = new FormData()
     const getPhoto = (e)=>{setPhoto(e.target.files[0]);
         img.current.src = window.URL.createObjectURL(e.target.files[0])}
     const showDetail = (id)=>{
@@ -18,10 +22,12 @@ const List = () => {
         setDetail([...art])
         setCateg(art[0].category)
     }
-    const handleCategory = (e)=>{ setCateg(e.target.value)}
-
-    const formData = new FormData()
+    const handleCategory = (e)=>{setCateg(e.target.value)}
+    const deleteArticle = (id)=>{
+        axios.delete(`${url_api.articles}${id}`).then(()=>{toast.success("article supprimé");setReload(!reload)}).catch(()=>alert("erreur de connexion à la bdd"));
+    }   
     const onSubmit = (e)=>{
+
         e.preventDefault()
         const form = e.target.elements
         formData.append("title",form.title.value)
@@ -48,7 +54,13 @@ const List = () => {
         }
         axios.patch(`${url_api.articles}${detail[0].id}`,formData).then(()=>{toast.success("article modifié ✋");window.location.reload(false)})
     }
-    useEffect(()=>{axios.get(url_api.articles).then(res=>setData(res.data)).catch(()=>alert("erreur de connexion à la base de donnée"));},[])
+    useEffect(()=>{axios.get(url_api.articles).then(
+        res=>{
+            console.log(Auth);
+            const d = res.data.filter((x)=>x.userId === Auth.data.id)
+            setData(d)
+        }
+    ).catch(()=>alert("erreur de connexion à la base de donnée"));},[reload,Auth])
     return (
         <>  
             {
@@ -65,7 +77,7 @@ const List = () => {
                                     <label htmlFor="price">price : </label>
                                     <input type="number" defaultValue={art.price} min={0} id="price"/><span>Ariary</span>
                                 </div>  
-                                <h3>status : {art.status =="oui"? "publié" : "en cours"}  </h3>
+                                <h3>status : { art.status =="oui"? "publié" : "en cours"}  </h3>
                             </div>
                             <div className="content-detail">
                                 <textarea cols="20" rows="5" defaultValue={art.description} required id="desc"></textarea>
@@ -203,7 +215,7 @@ const List = () => {
                                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.0008 17L6.12295 20.5902L7.72105 13.8906L2.49023 9.40983L9.35577 8.85942L12.0008 2.5L14.6458 8.85942L21.5114 9.40983L16.2806 13.8906L17.8787 20.5902L12.0008 17Z"/></svg>
                                 <span></span>
                                 </div>
-                                <button title="delete">
+                                <button title="delete" onClick={()=>deleteArticle(art.id)}>
                                 <svg   viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M7 6V3C7 2.44772 7.44772 2 8 2H16C16.5523 2 17 2.44772 17 3V6H22V8H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V8H2V6H7ZM13.4142 13.9997L15.182 12.232L13.7678 10.8178L12 12.5855L10.2322 10.8178L8.81802 12.232L10.5858 13.9997L8.81802 15.7675L10.2322 17.1817L12 15.4139L13.7678 17.1817L15.182 15.7675L13.4142 13.9997ZM9 4V6H15V4H9Z"/></svg>
                                 </button>
                             </div>

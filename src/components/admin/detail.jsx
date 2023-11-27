@@ -39,15 +39,35 @@ const DetailAdmin = () => {
                 <h3>prix : <span>{ArtDetail.price} Ariary</span> </h3>
             </div>
             <div className="box-content">
-                <h3>superficie : <span>{ArtDetail.superficie} m<sup>2</sup></span></h3>
-                <h3>electricite : <span>{ArtDetail.elec ? "oui" : "non"}</span></h3>
-                <h3>eau : <span>{ArtDetail.eau ? "oui" : "non"}</span></h3>
-                <h3>garage : <span>{ArtDetail.garage ? "oui" : "non"}</span></h3>
+                {
+                    ArtDetail.category == "maison" && 
+                    <>
+                        <h3>chambre : <span>{ArtDetail.chambre}</span></h3>
+                        <h3>eau : <span>{ArtDetail.eau ? "oui" : "non"}</span></h3>
+                        <h3>electricite : <span>{ArtDetail.elec ? "oui" : "non"}</span></h3>
+                        <h3>garage : <span>{ArtDetail.garage ? "oui" : "non"}</span></h3>
+                    </>
+                }
+                {
+                    ArtDetail.category == "terrain" && 
+                    <h3>superficie : <span>{ArtDetail.superficie} m<sup>2</sup></span></h3>
+                }
             </div>
             <div className="box-content">
-                <h3>validité : {ArtDetail.validity}</h3>
-                <h3>contact : <span>{ArtDetail.contact}</span></h3>
-                <h3>reference : <span>{ArtDetail.reference}</span></h3>
+                <h3>garage : {ArtDetail.garage}</h3>
+                <h3>accessibilite : <span>{ArtDetail.access}</span></h3>
+                <h3>type : <span>{ArtDetail.type}</span></h3>
+                <h3>province : <span>{ArtDetail.province}</span></h3>
+            </div>
+            <div className="box-content">
+                <h3>identite : RAKOTOBELOHA Badoda</h3>
+                <h3>contact : <span>{ArtDetail.tel}</span></h3>
+            </div>
+            <div className="box-content">
+                <h3>virement : <span>{ArtDetail.contact}</span></h3>
+                <h3>ref : <span>{ArtDetail.reference}</span></h3>
+                <h3>date de pub : <span>{ArtDetail.date}</span></h3>
+                <h3>date de fin : <span>{ArtDetail.date}</span></h3>
             </div>
             <div className="btns">
                 <button onClick={()=>handleValidation(ArtDetail.id)}>validé</button>

@@ -16,7 +16,7 @@ const PostArticle = () => {
     const navigate = useNavigate()
     const img = useRef(null)
     const formData = new FormData()
-    
+    console.log(categ);
     const getPhoto = (e)=>{setPhoto(e.target.files[0]);img.current.src = window.URL.createObjectURL(e.target.files[0])}; 
     const handleCategory = (e)=>{setCateg(e.target.value);}
     const onSubmit = (data,e)=>{
@@ -28,14 +28,19 @@ const PostArticle = () => {
     const validArticle = (data,e)=>{
         e.preventDefault
         const values = {...dataArticle}
+        console.log(categ);
+        console.log(values);
         formData.append("title",values.title)
         formData.append("description",values.description)
         formData.append("price",values.price)
         formData.append("image",photo)
+        formData.append("type",values.type)
         formData.append("province",values.province)
         formData.append("category",categ)
         formData.append("chambre",values.chambre);
-        (categ == "maison") ? (formData.append("access",values.access)):(formData.append("access",0));
+        formData.append("tel",values.tel);
+        formData.append("access",values.accessibilite);
+
         (values.elec == false) ? (formData.append("elec","non")):formData.append("elec","oui");
         (values.eau == false) ? (formData.append("eau","non")):formData.append("eau","oui");
         (values.garage == false) ? (formData.append("garage","non")):formData.append("garage","oui");
@@ -62,7 +67,6 @@ const PostArticle = () => {
     }
 
     useEffect(()=>{
-        setCateg(false)
     },[dataArticle])
     return (
         <div className="new">
@@ -71,10 +75,48 @@ const PostArticle = () => {
                 paiement ?
                 <>
                     <form className="paiement" onSubmit={forms.reference.handleSubmit(validArticle)}>
-                        <a onClick={()=>setPaiment(false)}>retour</a>
-                        <input type="tel" maxLength={10} minLength={10} placeholder="numero de telephone" {...forms.reference.register("contact")} />
-                        <input type="text" placeholder="reference du virement" {...forms.reference.register("reference")}/>
-                        <button>valider</button>
+                        <div className="ref">
+                            <input type="tel" maxLength={10} minLength={10} placeholder="numero de telephone" {...forms.reference.register("contact")} />
+                            <input type="text" placeholder="reference du virement" {...forms.reference.register("reference")}/>
+                        </div>
+                        <div className="identity">
+                            <input type="text" placeholder="name ..." />
+                            <input type="text" placeholder="firstname ..." />
+                        </div>
+                        <div className="validity">
+                            <label htmlFor="val1">
+                                <div className="tarif">
+                                    <input type="radio" name="validity" id="val1" />
+                                    <h3>1 month</h3>
+                                </div>
+                                <h4>50 000 ariary</h4>
+                            </label>
+                            <label htmlFor="val2">
+                                <div className="tarif">
+                                    <input type="radio" name="validity" id="val2" />
+                                    <h3>1 month</h3>
+                                </div>
+                                <h4>50 000 ariary</h4>
+                            </label>
+                            <label htmlFor="val3">
+                                <div className="tarif">
+                                    <input type="radio" name="validity" id="val3" />
+                                    <h3>1 month</h3>
+                                </div>
+                                <h4>50 000 ariary</h4>
+                            </label>
+                            <label htmlFor="val4">
+                                <div className="tarif">
+                                    <input type="radio" name="validity" id="val4" />
+                                    <h3>1 month</h3>
+                                </div>
+                                <h4>50 000 ariary</h4>
+                            </label>
+                        </div>
+                        <div className="btns">
+                            <a onClick={()=>setPaiment(false)}>retour</a>
+                            <button>valider</button>
+                        </div>
                     </form>
                 </>
                 : 
@@ -111,6 +153,7 @@ const PostArticle = () => {
                         </label>
                         <input type="file" onChange={getPhoto} id="image" hidden/>
                       </div>
+                      <input type="tel" id="tel" {...forms.add.register("tel")} placeholder="telephone ..." required maxLength={10} minLength={10}/>
                       <div className="categValue">
                         {
                             categ=="terrain" ?
@@ -154,7 +197,6 @@ const PostArticle = () => {
                                         <label htmlFor="garage">garage</label>
                                     </div>
                                 </div>
-
                             </div>
                         }
                       </div>
@@ -163,7 +205,7 @@ const PostArticle = () => {
                 </form>
             }
         </div>
-        // Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam veritatis temporibus maxime enim maiores sint repudiandae molestiae ratione, vero labore eveniet natus recusandae distinctio aliquam. Nostrum voluptatibus similique quod aspernatur! Asperiores, natus aliquam! Itaque voluptatibus nihil natus aliquam incidunt optio iste, exercitationem voluptatem labore dolorem quae quibusdam quasi officiis culpa.
+
     )   
 }
 

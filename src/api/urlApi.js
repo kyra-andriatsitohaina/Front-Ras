@@ -5,4 +5,5 @@ export const url_api ={
     category : `${baseUrl}admin/category`,
     users : `${baseUrl}users`,
     admin : `${baseUrl}admin/login`,
+    favorite : `${baseUrl}articles/favorite/`,
 }

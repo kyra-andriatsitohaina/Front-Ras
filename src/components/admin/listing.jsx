@@ -44,14 +44,14 @@ const Listing = () => {
         }
     },[validate,showDetailArt])
     return (    
-        <div className="box-listing">
+        <div className="box-listing" style={{width:"100%"}}>
             <div className="filter">
                 <select id="filter" onChange={handleFilter}>
                     <option value="all">all</option>
                     <option value="unvalid">en attente</option>
                 </select>
             </div>
-            <div className="listing">
+            <div className="listing" >
                 {
                 dataArticle.length !== 0 ?               
                 dataArticle.map(art=>(
