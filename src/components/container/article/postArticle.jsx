@@ -13,6 +13,9 @@ const PostArticle = () => {
     const [photo,setPhoto ] = useState()
     const  [dataArticle,setDataArticle] = useState({})
     const [Auth,setAuth]= useContext(AuthUser)
+    const [tarif,setTarif] = useState()
+
+    
     const navigate = useNavigate()
     const img = useRef(null)
     const formData = new FormData()
@@ -27,9 +30,8 @@ const PostArticle = () => {
     
     const validArticle = (data,e)=>{
         e.preventDefault
+       
         const values = {...dataArticle}
-        console.log(categ);
-        console.log(values);
         formData.append("title",values.title)
         formData.append("description",values.description)
         formData.append("price",values.price)
@@ -46,8 +48,12 @@ const PostArticle = () => {
         (values.garage == false) ? (formData.append("garage","non")):formData.append("garage","oui");
         formData.append("status","non");
         (values.superficie == undefined) ? (formData.append("superficie",0)):formData.append("superficie",values.superficie);
-        formData.append("contact",data.contact);
+
         formData.append("reference",data.reference);
+        formData.append("tel_transfert",data.tel_transfert);
+        formData.append("name",data.nom);
+        formData.append("contact",data.contact);
+        formData.append("validation",data.tarif);
         axios.post(`${url_api.articles}${Auth.data.id}`,formData);
         toast.success("article ajouté 👍")
         setTimeout(()=>{
@@ -56,7 +62,6 @@ const PostArticle = () => {
         },1000)
 
     }
-
     const registerForm = ()=>{
         const {handleSubmit,register,formState:{errors}}=useForm()
         return {handleSubmit,register,formState:{errors}}
@@ -65,8 +70,10 @@ const PostArticle = () => {
         add:registerForm(),
         reference:registerForm()
     }
-
     useEffect(()=>{
+        axios.get(`${url_api.tarif}`)
+        .then(res=>setTarif(res.data))
+        .catch(()=>alert("erreur de connexion à la bdd"))
     },[dataArticle])
     return (
         <div className="new">
@@ -76,42 +83,25 @@ const PostArticle = () => {
                 <>
                     <form className="paiement" onSubmit={forms.reference.handleSubmit(validArticle)}>
                         <div className="ref">
-                            <input type="tel" maxLength={10} minLength={10} placeholder="numero de telephone" {...forms.reference.register("contact")} />
-                            <input type="text" placeholder="reference du virement" {...forms.reference.register("reference")}/>
+                            <input type="text" placeholder="reference du virement" {...forms.reference.register("reference")} required/>
+                            <input type="tel" maxLength={10} minLength={10} placeholder="tel du transfert" {...forms.reference.register("tel_transfert")} required/>
                         </div>
                         <div className="identity">
-                            <input type="text" placeholder="name ..." />
-                            <input type="text" placeholder="firstname ..." />
+                            <input type="text" placeholder="nom du vendeur ..." {...forms.reference.register("nom")} required/>
+                            <input type="tel" id="tel" {...forms.reference.register("contact")} placeholder="contact du vendeur ..." required maxLength={10} minLength={10}/>
                         </div>
                         <div className="validity">
-                            <label htmlFor="val1">
-                                <div className="tarif">
-                                    <input type="radio" name="validity" id="val1" />
-                                    <h3>1 month</h3>
-                                </div>
-                                <h4>50 000 ariary</h4>
-                            </label>
-                            <label htmlFor="val2">
-                                <div className="tarif">
-                                    <input type="radio" name="validity" id="val2" />
-                                    <h3>1 month</h3>
-                                </div>
-                                <h4>50 000 ariary</h4>
-                            </label>
-                            <label htmlFor="val3">
-                                <div className="tarif">
-                                    <input type="radio" name="validity" id="val3" />
-                                    <h3>1 month</h3>
-                                </div>
-                                <h4>50 000 ariary</h4>
-                            </label>
-                            <label htmlFor="val4">
-                                <div className="tarif">
-                                    <input type="radio" name="validity" id="val4" />
-                                    <h3>1 month</h3>
-                                </div>
-                                <h4>50 000 ariary</h4>
-                            </label>
+                            {
+                                tarif.map((tar)=>(
+                                    <label htmlFor={`val${tar.id}`}>
+                                        <div className="tarif">
+                                            <input type="radio" name="validity" id={`val${tar.id}`} value={tar.validity} {...forms.reference.register("tarif")}/>
+                                            <h3>{tar.validity} month</h3>
+                                        </div>
+                                        <h4>{tar.tarif} ariary</h4>
+                                    </label>
+                                ))
+                            }
                         </div>
                         <div className="btns">
                             <a onClick={()=>setPaiment(false)}>retour</a>
@@ -153,7 +143,6 @@ const PostArticle = () => {
                         </label>
                         <input type="file" onChange={getPhoto} id="image" hidden/>
                       </div>
-                      <input type="tel" id="tel" {...forms.add.register("tel")} placeholder="telephone ..." required maxLength={10} minLength={10}/>
                       <div className="categValue">
                         {
                             categ=="terrain" ?

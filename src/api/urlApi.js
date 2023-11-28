@@ -6,4 +6,6 @@ export const url_api ={
     users : `${baseUrl}users`,
     admin : `${baseUrl}admin/login`,
     favorite : `${baseUrl}articles/favorite/`,
+    validation : `${baseUrl}articles/validation/`,
+    tarif : `${baseUrl}articles/tarifs/`,
 }

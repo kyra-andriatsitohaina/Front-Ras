@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { AuthUser, DetailContext, ModalContext } from "../../context/Context"
+import { AuthAdmin, AuthUser, DetailContext, ModalContext } from "../../context/Context"
 import { useCookies } from "react-cookie"
 import { url_api } from "../../../api/urlApi"
 import { toast } from 'react-toastify'
@@ -18,9 +18,9 @@ const FavoriteLogin = () => {
             window.location.reload(false)
         },2000)
     }
-        console.log(Auth);
     return (
         <div className="favorites-login">
+            {cookies._admin && <Link to={"/admin/dashboard/list"} id="admin">Admin</Link>}
             {
                 cookies._auth &&
                     <button>

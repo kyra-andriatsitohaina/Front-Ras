@@ -15,7 +15,7 @@ const Listing = () => {
         if(art.status=="oui"){
             toast.info(`cet article est deja publié`)
         }else{art.status="oui"
-            axios.patch(`${url_api.articles}${id}`,art)
+            axios.patch(`${url_api.validation}${id}`,art)
             .then(()=>{setValidate(!validate);toast.success(`article : ${art.title} validé`)})
         }
     }

@@ -12,6 +12,8 @@ const List = () => {
     const [categ,setCateg] = useState()
     const [photo,setPhoto ] = useState()
     const [reload,setReload] = useState(false)
+    const [tarifData,setTarifData] = useState()
+    const [tarifAbon,setTarifAbon] = useState()
     const img = useRef()
     const formData = new FormData()
     const getPhoto = (e)=>{setPhoto(e.target.files[0]);
@@ -21,13 +23,15 @@ const List = () => {
         const art = data.filter((x)=>x.id === id)
         setDetail([...art])
         setCateg(art[0].category)
+        const t = tarifData.filter((x)=>x.validity === art[0].validation)
+        setTarifAbon(t[0].tarif)       
     }
     const handleCategory = (e)=>{setCateg(e.target.value)}
     const deleteArticle = (id)=>{
         axios.delete(`${url_api.articles}${id}`).then(()=>{toast.success("article supprimé");setReload(!reload)}).catch(()=>alert("erreur de connexion à la bdd"));
     }   
     const onSubmit = (e)=>{
-
+        
         e.preventDefault()
         const form = e.target.elements
         formData.append("title",form.title.value)
@@ -54,13 +58,11 @@ const List = () => {
         }
         axios.patch(`${url_api.articles}${detail[0].id}`,formData).then(()=>{toast.success("article modifié ✋");window.location.reload(false)})
     }
-    useEffect(()=>{axios.get(url_api.articles).then(
-        res=>{
-            console.log(Auth);
-            const d = res.data.filter((x)=>x.userId === Auth.data.id)
-            setData(d)
-        }
-    ).catch(()=>alert("erreur de connexion à la base de donnée"));},[reload,Auth])
+    useEffect(()=>{
+        axios.get(url_api.articles).then(res=>{const d = res.data.filter((x)=>x.userId === Auth.data.id);setData(d)}).catch(()=>alert("erreur de connexion à la base de donnée"));
+        axios.get(url_api.tarif).then(res=>setTarifData(res.data))
+    },[reload,Auth]
+    )
     return (
         <>  
             {
@@ -188,11 +190,14 @@ const List = () => {
                                 </div>
                             </div>
                             <div className="delai">
-                                <h3>date de publication : 23/07/22</h3>
-                                <h3>fin de valididé : 23/07/22</h3>
+                                {art.status == "oui" &&  <h3>date de publication : {art.date_publication}</h3>}
+                                {art.status == "non" &&  <h3>validation en cours ...</h3>}
+                                <h3>abonnement : {art.validation} mois</h3>
+                                <h3>tarif : {tarifAbon} Ariary</h3>
+                                {art.status == "oui" &&  <h3>fin de valididé : {art.fin_validation}</h3>}
                             </div>
                             <div className="btns">
-                                <a onClick={()=>setShowValue({hidden:false})}>annuler</a>
+                                <a onClick={()=>{setShowValue({hidden:false});setReload(!reload)}}>annuler</a>
                                 <button>update</button>
                             </div>
                         </form>

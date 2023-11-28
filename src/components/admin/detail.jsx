@@ -54,20 +54,22 @@ const DetailAdmin = () => {
                 }
             </div>
             <div className="box-content">
-                <h3>garage : {ArtDetail.garage}</h3>
                 <h3>accessibilite : <span>{ArtDetail.access}</span></h3>
                 <h3>type : <span>{ArtDetail.type}</span></h3>
                 <h3>province : <span>{ArtDetail.province}</span></h3>
             </div>
             <div className="box-content">
-                <h3>identite : RAKOTOBELOHA Badoda</h3>
-                <h3>contact : <span>{ArtDetail.tel}</span></h3>
+                <h3>identite : {ArtDetail.name}</h3>
+                <h3>contact : <span>{ArtDetail.contact}</span></h3>
             </div>
             <div className="box-content">
-                <h3>virement : <span>{ArtDetail.contact}</span></h3>
+                <h3>virement : <span>{ArtDetail.tel_transfert}</span></h3>
                 <h3>ref : <span>{ArtDetail.reference}</span></h3>
-                <h3>date de pub : <span>{ArtDetail.date}</span></h3>
-                <h3>date de fin : <span>{ArtDetail.date}</span></h3>
+            </div>
+            <div className="box-content">
+                {ArtDetail.status =="non" && <h3 style={{textAlign:"center"}}>en attente de votre validation ... </h3>}
+                {ArtDetail.status =="oui" && <h3>date de pub : <span>{ArtDetail.date_publication}</span></h3>}
+                {ArtDetail.status =="oui" && <h3>date de fin : <span>{ArtDetail.fin_validation}</span></h3>}
             </div>
             <div className="btns">
                 <button onClick={()=>handleValidation(ArtDetail.id)}>validé</button>
