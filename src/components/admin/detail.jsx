@@ -12,7 +12,7 @@ const DetailAdmin = () => {
         if(art.status == "oui"){
             toast.info(`cet article est deja publié`)
         }else{art.status="oui"
-            axios.patch(`${url_api.articles}${id}`,art)
+            axios.patch(`${url_api.validation}${id}`,art)
             .then(()=>{toast.success(`article : ${art.title} validé`);setShowDetail(false)})
         }
     }
@@ -69,6 +69,7 @@ const DetailAdmin = () => {
             <div className="box-content">
                 {ArtDetail.status =="non" && <h3 style={{textAlign:"center"}}>en attente de votre validation ... </h3>}
                 {ArtDetail.status =="oui" && <h3>date de pub : <span>{ArtDetail.date_publication}</span></h3>}
+                <h3>validation : <span>{ArtDetail.validation} mois</span></h3>
                 {ArtDetail.status =="oui" && <h3>date de fin : <span>{ArtDetail.fin_validation}</span></h3>}
             </div>
             <div className="btns">
