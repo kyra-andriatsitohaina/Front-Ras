@@ -35,11 +35,11 @@ const Details = ({data}) => {
                 {
                     data.category == "maison" &&
                     <>
-                        <h3><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 11V20H20V17H4V20H2V4H4V14H12V7H18C20.2091 7 22 8.79086 22 11ZM8 13C6.34315 13 5 11.6569 5 10C5 8.34315 6.34315 7 8 7C9.65685 7 11 8.34315 11 10C11 11.6569 9.65685 13 8 13Z"/></svg><span>{data.chambre} chambre</span></h3>
-                        <h3><img src="../../../img/lamp-icon.svg" alt="" /><span>{data.elec}</span></h3>
+                        <h3><img src="../../../img/snoring-icon.svg" /><span>{data.chambre} chambre</span></h3>
+                        <h3><img src="../../../img/lamp-icon.svg" /><span>{data.elec}</span></h3>
                         <h3><img src="../../../img/hand-wash-icon.svg"/><span>{data.eau}</span></h3>
-                        <h3><img src="../../../img/garage-icon.svg" alt="" /><span>{data.garage}</span></h3>
-                        <h3><img src="../../../img/parking-icon.svg" alt="" /><span>{data.access}</span></h3>
+                        <h3><img src="../../../img/garage-icon.svg"  /><span>{data.garage}</span></h3>
+                        <h3><img src="../../../img/parking-icon.svg" /><span>{data.access}</span></h3>
                     </>
                 }
                 
@@ -59,7 +59,7 @@ const Details = ({data}) => {
             </div>
             <div className="tel">
                 <h4>reponsable : {data.name}</h4>
-                <h4><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g dataNme="Layer 2"><g dataName="phone"><rect width="24" height="24" opacity="0"/><path d="M17.4 22A15.42 15.42 0 0 1 2 6.6 4.6 4.6 0 0 1 6.6 2a3.94 3.94 0 0 1 .77.07 3.79 3.79 0 0 1 .72.18 1 1 0 0 1 .65.75l1.37 6a1 1 0 0 1-.26.92c-.13.14-.14.15-1.37.79a9.91 9.91 0 0 0 4.87 4.89c.65-1.24.66-1.25.8-1.38a1 1 0 0 1 .92-.26l6 1.37a1 1 0 0 1 .72.65 4.34 4.34 0 0 1 .19.73 4.77 4.77 0 0 1 .06.76A4.6 4.6 0 0 1 17.4 22z"/></g></g></svg><span> : {data.contact}</span></h4>
+                <h4>contact : {data.contact}</h4>
             </div>
             <div className="box2">
                 <button title="add favorite">

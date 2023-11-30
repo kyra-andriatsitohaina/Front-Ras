@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { ArticleContext, AuthUser, CategoryContext, DetailContext, ModalContext, SearchContext } from "../../context/Context"
+import { ArticleContext, AuthUser, CategoryContext, DetailContext, ModalContext, SearchContext, SortContext } from "../../context/Context"
 import Slider from "react-slick";
 import { SettingSlick } from "../../utils/slick";
 import "slick-carousel/slick/slick.css"; 
@@ -15,10 +15,11 @@ const Categories = ({category}) => {
     const [detailContext,setDetailContext] = useContext(DetailContext)
     const [search,setSearch] = useContext(SearchContext)
     const [Auth,setAuth] = useContext(AuthUser)
-
+    const [sort,setSort] = useContext(SortContext)
     const filtre = []
     const tabSetting = []
-    for(let i= 0 ; i< category.length;i++){filtre.push(data.filter((d)=>d.province === category[i]));tabSetting.push({...SettingSlick})}
+    for(let i= 0 ; i< category.length;i++){
+        if(sort){filtre.push(data.reverse().filter((d)=>d.province === category[i]));tabSetting.push({...SettingSlick})}else{filtre.push(data.sort().filter((d)=>d.province === category[i]));tabSetting.push({...SettingSlick})}}
     const showDetail = (data)=>{setModalContext({show:true,login:false});setDetailContext({hidden:true,data})}
     const handleFavorite = ({...data})=>{
         const UserId = Auth.data.id
@@ -37,7 +38,7 @@ const Categories = ({category}) => {
             {search.active && 
                 <div style={{padding:"2vw",width:"100%",marginBottom:"1vw",display:"flex",justifyContent:"space-between",alignItems:"center",background:"whitesmoke",borderRadius:".5vw"}}>
                     <h4 style={{fontSize:"1.2vw"}}>{search.result} resultat sur "{search.query}"</h4> 
-                    <button onClick={showAll}>see all</button>
+                    <button onClick={showAll}>All</button>
                 </div>
             }
             {   

@@ -9,7 +9,7 @@ const Header = () => {
 const header = useRef(null)
 const Fn = ()=>{
     let bg = "transparent"
-    window.scrollY > 25 ? bg = "gray" : null
+    window.scrollY > 25 &&( bg = "gray") 
     header.current.style.backgroundColor=bg
 }
 window.addEventListener("scroll",Fn)

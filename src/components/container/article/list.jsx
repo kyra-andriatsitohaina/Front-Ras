@@ -40,9 +40,9 @@ const List = () => {
         form.image.files[0] !== undefined && formData.append("image",form.image.files[0]);
         formData.append("description",form.desc.value);
         formData.append("category",form.category.value);
+        formData.append("access",form.accessibilite.value);
         if(form.category.value =="maison"){
             formData.append("superficie",0);
-            formData.append("access",0);
             formData.append("chambre",form.chambre.value);
             console.log(form.elec.value);
             (form.eau.checked)?formData.append("eau","oui"):formData.append("eau","non");
@@ -54,7 +54,6 @@ const List = () => {
             formData.append("elec","non");
             formData.append("garage","non");
             formData.append("superficie",form.superficie.value);
-            formData.append("access",form.accessibilite.value);
         }
         axios.patch(`${url_api.articles}${detail[0].id}`,formData).then(()=>{toast.success("article modifié ✋");window.location.reload(false)})
     }
@@ -100,22 +99,21 @@ const List = () => {
                                     {
                                     categ == art.category ? 
                                         (<div className="infos">
+                                            <div className="inp">
+                                                <label htmlFor="accessibilite">accessibilite : </label>
+                                                    <select  id="accessibilite"  defaultValue={art.access}>
+                                                    <option value="moto">moto</option>
+                                                    <option value="voiture">voiture</option>
+                                                </select>
+                                            </div> 
+                                            
                                             {
                                                 art.category == "terrain" ?
                                                 (   
-                                                    <>
                                                         <div className="inp">
                                                             <label htmlFor="superficie">superficie : &nbsp;</label>
                                                             <input type="text"  id="superficie" defaultValue={art.superficie}/><span> &nbsp;m<sup>2</sup></span>
                                                         </div>
-                                                        <div className="inp">
-                                                            <label htmlFor="accessibilite">accessibilite : </label>
-                                                                <select  id="accessibilite"  defaultValue={art.access}>
-                                                                <option value="moto">moto</option>
-                                                                <option value="voiture">voiture</option>
-                                                            </select>
-                                                        </div> 
-                                                    </>
                                                 )
                                                 :
                                                 (   
@@ -187,6 +185,7 @@ const List = () => {
                                         </div>)
                                         )
                                     }
+                                    
                                 </div>
                             </div>
                             <div className="delai">
