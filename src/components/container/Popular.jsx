@@ -16,13 +16,14 @@ const Popular = ({popular}) => {
         <section className="popular-properties" id="popular" style={{paddingTop:"12vw"}}>
             <div className="box-popular" >
                 <div className="title">
-                    <h2>popular properties</h2>
+                    <h2 id="title-popular">popular properties</h2>
                 </div>
                 <div className="popular">
                     {
                         favoriteValues.map((art)=>(
                             <div className="box-img" key={art.id}>
                                 <img src={`${url_api.images}${art.image}`} alt=""/>
+                                <h3>{art.title}</h3>
                                 <p>{art.description}</p>
                             </div>
                         ))

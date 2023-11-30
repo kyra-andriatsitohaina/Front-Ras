@@ -37,8 +37,8 @@ const Categories = ({category}) => {
         <>  
             {search.active && 
                 <div style={{padding:"2vw",width:"100%",marginBottom:"1vw",display:"flex",justifyContent:"space-between",alignItems:"center",background:"whitesmoke",borderRadius:".5vw"}}>
-                    <h4 style={{fontSize:"1.2vw"}}>{search.result} resultat sur "{search.query}"</h4> 
-                    <button onClick={showAll}>All</button>
+                    <h4 id="result">{search.result} resultat{parseInt(search.result)> 2 && "s"} sur <span> " {search.query} " </span></h4> 
+                    <button onClick={showAll} id="all">All</button>
                 </div>
             }
             {   

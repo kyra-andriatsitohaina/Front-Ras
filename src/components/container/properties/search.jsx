@@ -60,8 +60,8 @@ const Search = () => {
                 {message && <label htmlFor="search" style={{fontSize:"1.2vw",alignSelf:"start",marginBottom:"1vw"}}>{message}</label>}
                 <div className="form-group" style={{display:"flex"}}>
                     <input type="search" placeholder=" search term ..." ref={searchInput} onChange={deleteSelect} id="search"/>
-                    <button onClick={handleSearch} style={{margin:"0"}}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <button onClick={handleSearch} style={{margin:"0"}} id="searchBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     </button>
                 </div>
                 <div className="form-group">
